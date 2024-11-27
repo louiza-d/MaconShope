@@ -12,12 +12,18 @@ import Produit from './pages/Materils';
 import Livraison from './pages/Livraison';
 import MonCompte from './pages/MonCompte';
 
+import Cart from './pages/Cart';
+
+
+
+
 
 const menuItems = [
   { label: 'Home', url: '/home' },
   { label: 'Matériels', url: '/materils' },
   { label: 'Livraison', url: '/livraison' },
   { label: 'Mon Compte', url: '/moncompte' },
+  { label : 'Panier', url: '/Cart'},
 ];
 
 function App() {
@@ -54,6 +60,8 @@ function App() {
               </li>
             ))}
 
+            
+
           </ul>
           </Navbar.Collapse>
           </nav>
@@ -64,7 +72,8 @@ function App() {
           <Route path="/home" element={<AppHome />} />
           <Route path="/materils" element={<Produit/>} />
           <Route path="/livraison" element={<Livraison />} />
-          <Route path="/moncompte" element={<MonCompte />} />
+          <Route path="/moncompte" element={<MonCompte />} />  
+          <Route path="/cart" element={<Cart />} />
       </Routes>
              
       <div>

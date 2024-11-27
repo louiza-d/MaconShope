@@ -2,7 +2,7 @@ import React from 'react';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 
 
-function Materil({ materil, toggleLike }) {
+function Materil({ materil, toggleLike, addToCartHandler }) {
   const handleLike = () => {
     toggleLike(materil.id);
   };
@@ -15,10 +15,10 @@ function Materil({ materil, toggleLike }) {
         <p className="card-text">{materil.description}</p>
         <p className="card-text">
           <strong>Prix: </strong>{materil.prix} DA</p>
-        <a href={materil.link} className="btn btn-secondary text-warning me-4">
-          Acheter maintenant
-        </a>
-        
+
+        <button className="btn btn-secondary text-warning me-4" 
+        onClick={() => addToCartHandler(materil)}>Ajouter au panier</button>
+
         <button
             onClick={handleLike}
             className={`btn btn-${materil.liked ? 'danger' : 'secondary'} rounded-circle`}
@@ -37,3 +37,6 @@ function Materil({ materil, toggleLike }) {
 
 
 export default Materil;
+/**<a href={materil.link} className="btn btn-secondary text-warning me-4 mb-2">
+          Acheter maintenant
+        </a> */
