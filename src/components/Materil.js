@@ -3,6 +3,8 @@ import 'bootstrap-icons/font/bootstrap-icons.css';
 
 
 function Materil({ materil, toggleLike, addToCartHandler }) {
+
+
   const handleLike = () => {
     toggleLike(materil.id);
   };
@@ -37,6 +39,3 @@ function Materil({ materil, toggleLike, addToCartHandler }) {
 
 
 export default Materil;
-/**<a href={materil.link} className="btn btn-secondary text-warning me-4 mb-2">
-          Acheter maintenant
-        </a> */

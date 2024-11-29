@@ -13,6 +13,7 @@ import Livraison from './pages/Livraison';
 import MonCompte from './pages/MonCompte';
 
 import Cart from './pages/Cart';
+import { useSelector } from 'react-redux';
 
 
 
@@ -27,18 +28,8 @@ const menuItems = [
 ];
 
 function App() {
-/* 
-   // Fetch les données des matériaux lors du chargement de l'application
-   useEffect(() => {
-    fetch('/api/materils')
-      .then((response) => response.json())
-      .then((data) => {
-        localStorage.setItem('mesMaterils', JSON.stringify(data));
-      })
-      .catch((error) => console.error('Erreur lors du chargement des matériaux:', error));
-  }, []); // Le tableau vide [] assure que cela s'exécute une seule fois au montage.
-
-*/
+   
+const cartCount = useSelector((state) => state.cart.items.length); // Nombre d'articles dans le panier
 
   return (
 
@@ -53,9 +44,17 @@ function App() {
           <ul className="me-auto ">
             
           {menuItems.map((item) => (
-              <li className="nav-item" key={item.url}>
+              <li className="nav-item d-flex align-items-center" key={item.url}>
                 <Link className="nav-link" to={item.url}>
                 {item.label}
+                {item.label === 'Panier' && (
+                  <>
+                  <i className="bi bi-cart fs-4 me-2"></i>
+                  {cartCount > 0 && (
+                       <span className="badge bg-warning text-dark ms-1">{cartCount}</span>
+                  )}
+                  </>
+              )}
                 </Link>
               </li>
             ))}
