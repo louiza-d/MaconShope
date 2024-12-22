@@ -1,10 +1,10 @@
 import React from 'react'
 
 function AppJumbotron() {
-  return (
-    <div class="jumbotron text-center mt-5 mb-5">
-    <h1 class="display-4 fw-bold">Bienvenue chez MaconShope</h1>
-    <p class="lead fs-4">Votre fournisseur d'outils de maçonnerie de qualité pour tous types de travaux, du bricolage aux grands chantiers.</p>
+  return ( 
+    <div className="jumbotron text-center mt-5 mb-5" style={{ width: '27%', margin: '0 auto' }}>
+    <h1 className="display-4 fw-bold">Bienvenue chez MaconShope</h1>
+    <p className="lead fs-5 fw-bold " >Votre fournisseur d'outils de maçonnerie de qualité pour tous types de travaux, du bricolage aux grands chantiers.</p> 
   </div>
   )
 }

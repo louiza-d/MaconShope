@@ -8,7 +8,7 @@ import AppFooter from './components/Footer';
 
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 import AppHome from './components/Home'
-import Produit from './pages/Materils';
+import Materils from './pages/Materils';
 import Livraison from './pages/Livraison';
 import MonCompte from './pages/MonCompte';
 
@@ -47,6 +47,7 @@ const cartCount = useSelector((state) => state.cart.items.length); // Nombre d'a
               <li className="nav-item d-flex align-items-center" key={item.url}>
                 <Link className="nav-link" to={item.url}>
                 {item.label}
+                
                 {item.label === 'Panier' && (
                   <>
                   <i className="bi bi-cart fs-4 me-2"></i>
@@ -69,10 +70,11 @@ const cartCount = useSelector((state) => state.cart.items.length); // Nombre d'a
 
       <Routes>
           <Route path="/home" element={<AppHome />} />
-          <Route path="/materils" element={<Produit/>} />
+          <Route path="/materils" element={<Materils/>} />
           <Route path="/livraison" element={<Livraison />} />
           <Route path="/moncompte" element={<MonCompte />} />  
           <Route path="/cart" element={<Cart />} />
+          
       </Routes>
              
       <div>

@@ -1,47 +1,59 @@
-import { createSlice } from '@reduxjs/toolkit';
-
-const initialState = {
-  list: [],
-  likedMaterils: [], // Liste des IDs des matériaux likés
-  usersWhoLiked: {}, // Clé : ID du matériel, Valeur : tableau d'IDs d'utilisateurs
-};
+import { createSlice,  } from '@reduxjs/toolkit';
 
 const materilsSlice = createSlice({
   name: 'materils',
-  initialState,
+  initialState: {
+    loading: false,
+    materils: [],
+    error: null,
+   likedMaterils: [], // Tableau des matériaux likés
+   likedUsersByMateril: {},
+},
   reducers: {
-    setMaterils(state, action) {
-      state.list = action.payload; // Mettre à jour la liste des matériaux
+    
+    LIKE_MATERIL_REQUEST: (state) => {
+      state.loading = true;
+      state.error = null;
     },
-    likeMateril(state, action) {
-      const { materilId, userId } = action.payload;
-
-       const materil = state.list.find((m) => m.id === materilId);
-  if (materil && !materil.liked) {
-    materil.liked = true; // Met à jour directement l'objet dans `state.list`
-    state.likedMaterils.push(materilId);
-
-    if (!state.usersWhoLiked[materilId]) {
-      state.usersWhoLiked[materilId] = [];
-    }
-    state.usersWhoLiked[materilId].push(userId);
-  }
+    LIKE_MATERIL_SUCCESS: (state, action) => {
+      state.loading = false;
+      // Met à jour l'état avec les nouveaux matériaux likés
+      const { materilId, isLiked } = action.payload;
+      if (isLiked) {
+        // Si isLiked est true, ajouter l'ID à likedMaterils
+        if (!state.likedMaterils.includes(materilId)) {
+          state.likedMaterils.push(materilId);
+        }
+      } else {
+        // Si isLiked est false, retirer l'ID de likedMaterils
+        state.likedMaterils = state.likedMaterils.filter(id => id !== materilId);
+      }// Ajouter l'ID du matériau dans le tableau likedMaterils
     },
-    unlikeMateril(state, action) {
-      const { materilId, userId } = action.payload;
-      
-      const materil = state.list.find((m) => m.id === materilId);
-  if (materil && materil.liked) {
-    materil.liked = false; // Met à jour directement l'objet dans `state.list`
-    state.likedMaterils = state.likedMaterils.filter((id) => id !== materilId);
-
-    if (state.usersWhoLiked[materilId]) {
-      state.usersWhoLiked[materilId] = state.usersWhoLiked[materilId].filter((id) => id !== userId);
-    }
-  }
+    LIKE_MATERIL_FAILURE: (state, action) => {
+      state.loading = false;
+      const { materilId } = action.payload;
+      state.likedMaterils = state.likedMaterils.filter(id => id !== materilId); // Retirer l'ID du tableau likedMaterils
+    
     },
   },
+
+  extraReducers: (builder) => {
+    builder
+      .addCase('FETCH_MATERILS_REQUEST', (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase('FETCH_MATERILS_SUCCESS', (state, action) => {
+        state.loading = false;
+        state.materils = action.payload; // Mettez les données dans l'état global
+      })
+      .addCase('FETCH_MATERILS_FAILURE', (state, action) => {
+        state.loading = false;
+        state.error = action.payload; // Mettez l'erreur dans l'état global
+      });
+  },
+
 });
 
-export const { setMaterils, likeMateril, unlikeMateril } = materilsSlice.actions;
+export const { LIKE_MATERIL_REQUEST, LIKE_MATERIL_SUCCESS, LIKE_MATERIL_FAILURE } = materilsSlice.actions;
 export default materilsSlice.reducer;
